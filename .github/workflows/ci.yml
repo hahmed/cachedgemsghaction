@@ -12,9 +12,12 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:latest
         env:
-          ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
     - uses: actions/checkout@v2
@@ -31,13 +34,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-ruby-${{ matrix.ruby-version }}-
           ${{ runner.os }}-ruby-
-
-    - name: Wait for MySQL
-      run: |
-        until mysqladmin ping -h mysql --silent; do
-          echo 'Waiting for MySQL to start...'
-          sleep 1
-        done
 
     - name: Install dependencies
       run: |
