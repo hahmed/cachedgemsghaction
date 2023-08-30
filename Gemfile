@@ -17,6 +17,10 @@ gem "puma", "~> 6.0"
 
 gem "rubocop", "~> 1.21", require: false
 
+if RUBY_VERSION >= Gem::Version.new("3.0")
+  gem "webmock"
+end
+
 gem "redis"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
