@@ -15,8 +15,14 @@ gem "puma", "~> 6.0"
 
 gem "rubocop", "~> 1.21", require: false
 
-if RUBY_VERSION >= Gem::Version.new("3.0")
+if RUBY_VERSION > "3"
   gem "webmock"
+end
+
+if RUBY_VERSION < "3"
+  gem "minitest", ">= 5.15.0", "< 5.16"
+else
+  gem "minitest"
 end
 
 gem "redis"
