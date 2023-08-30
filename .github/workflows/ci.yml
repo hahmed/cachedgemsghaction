@@ -46,6 +46,11 @@ jobs:
         gem install bundler
         bundle install
 
+    - name: Prepare database
+      run: |
+        bundle exec rake db:create
+        bundle exec rake db:migrate
+
     - name: Run tests
       env:
         BUNDLE_JOBS: 4
